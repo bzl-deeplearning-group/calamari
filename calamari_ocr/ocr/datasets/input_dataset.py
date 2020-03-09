@@ -327,7 +327,7 @@ class StreamingInputDataset(InputDataset):
         preloaded_datas, preloaded_texts, preloaded_params = datas, texts, params
         self._generate_only_non_augmented.value = prev
 
-        if self.dataset.mode == DataSetMode.TRAIN or self.dataset.mode == DataSetMode.PRED_AND_EVAL:
+        if not self.data_augmentation_params.no_augs() and (self.dataset.mode == DataSetMode.TRAIN or self.dataset.mode == DataSetMode.PRED_AND_EVAL):
             abs_n_augs = self.data_augmentation_params.to_abs()
             preloaded_datas, preloaded_texts \
                 = self.data_augmenter.augment_datas(list(datas), list(texts), n_augmentations=abs_n_augs,
